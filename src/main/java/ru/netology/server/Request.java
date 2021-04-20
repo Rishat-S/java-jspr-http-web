@@ -48,4 +48,8 @@ public class Request {
     public String getPath() {
         return path;
     }
+
+    public String getMethod() {
+        return method;
+    }
 }
