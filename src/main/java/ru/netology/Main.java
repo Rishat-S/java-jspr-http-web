@@ -7,6 +7,5 @@ public class Main {
         Server server = new Server(64);
 
         server.listen(9999);
-
     }
 }

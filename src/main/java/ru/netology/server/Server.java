@@ -1,9 +1,7 @@
 package ru.netology.server;
 
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -22,7 +20,7 @@ public class Server {
     ExecutorService executorService;
 
     public Server(int poolSize) {
-        this.executorService = Executors.newFixedThreadPool(poolSize) ;
+        this.executorService = Executors.newFixedThreadPool(poolSize);
     }
 
     public void listen(int port) {
@@ -39,18 +37,12 @@ public class Server {
     private void processConnection(Socket socket) {
         try (
                 socket;
-                final var in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                final var in = socket.getInputStream();
                 final var out = new BufferedOutputStream(socket.getOutputStream())
         ) {
-            final var requestLine = in.readLine();
-            final var parts = requestLine.split(" ");
+            var request = Request.fromInputStream(in);
 
-            if (parts.length != 3) {
-                // just close socket
-                return;
-            }
-
-            final var path = parts[1];
+            final var path = request.getPath();
             if (!validPaths.contains(path)) {
                 out.write((
                         "HTTP/1.1 404 Not Found\r\n" +
