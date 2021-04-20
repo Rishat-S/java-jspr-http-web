@@ -27,7 +27,6 @@ public class Request {
         final var parts = requestLine.split(" ");
 
         if (parts.length != 3) {
-            // just close socket
             throw new IOException("Invalid request");
         }
 
