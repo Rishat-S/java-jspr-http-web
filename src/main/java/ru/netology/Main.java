@@ -30,7 +30,7 @@ public class Main {
                 out.write(content);
                 out.flush();
             } catch (Exception e) {
-                // FIXME:
+                e.printStackTrace();
             }
         });
 
